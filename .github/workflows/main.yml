@@ -15,5 +15,7 @@ jobs:
         run: docker ps
       - name: Test our functions
         run: docker build -t node-docker --target test .
+        run: docker run -t node-docker
       - name: prod
         run: docker build -t node-docker --target prod .
+        run: docker run -t node-docker
