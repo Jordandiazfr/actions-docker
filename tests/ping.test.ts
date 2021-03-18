@@ -3,4 +3,4 @@ import discord from "discord.js"
 import { expect } from 'chai';
 
 
-console.log(test)
+console.log("test")
