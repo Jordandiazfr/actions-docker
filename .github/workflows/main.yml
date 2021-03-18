@@ -1,9 +1,7 @@
 name: CI/CD Discord Bot (TOB)
 on:
   push:
-    branches:
-      - container
-      - master
+    branches: "**"
 jobs:
   build:
     runs-on: ubuntu-latest
