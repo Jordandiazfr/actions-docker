@@ -1,13 +1,16 @@
-FROM node:latest
+FROM node:14.15.4 as base
 
 WORKDIR /app
 
-#VOLUME /app
-
-COPY . .
-
-RUN npm install -g typescript
-
+COPY package.json package.json
+COPY package-lock.json package-lock.json
 RUN npm install -g
 
-CMD ["npm", "run", "bot"]
+FROM base as test
+COPY . .
+CMD [ "npm", "run", "test" ]
+
+FROM base as prod
+RUN npm prune --production
+COPY . .
+CMD [ "npm", "run", "bot" ]
