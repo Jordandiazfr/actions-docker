@@ -14,9 +14,7 @@ jobs:
       - name: See if the container is executing
         run: docker ps
       - name: Build test container
-        run: docker build -t node-docker --target test .
-      - name: Test our functions
-        run: docker run -t node-docker
+        run: docker build -t node-docker --target test . && docker run -t node-docker
       - name: Build prod
         run: docker build -t node-docker --target prod .
       - name: Execute prod
