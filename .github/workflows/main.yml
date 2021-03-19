@@ -18,7 +18,6 @@ jobs:
       with:
         targets: ""
   deployAnsible:
-    needs: build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
