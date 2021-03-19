@@ -1,8 +1,14 @@
-name: CI/CD Discord Bot (TOB)
+name: deploy ansible
 on:
   push:
     branches:
-      - "**"
+    - master
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  build:
     runs-on: ubuntu-latest
     steps:
     - name: checkout repo
@@ -11,33 +17,18 @@ on:
       uses: ansible/ansible-lint-action@master
       with:
         targets: ""
-  jobs:
-    deployAnsible:
-      needs: build
-      runs-on: ubuntu-latest
-      steps:
-      - name: 'Ansible'
-        uses: actions/checkout@v1
-          description: 'Runs an Ansible playbook'
-          inputs:
-            playbook:
-              description: 'Ansible playbook to run'
-              required: true
-              default: playbook.yml
-            inventory:
-              description: 'Ansible inventory to use'
-              required: true
-              default: localhost
-          runs:
-            using: 'docker'
-            image: 'Dockerfile'
-            args:
-              - ${{ inputs.playbook }}
-              - ${{ inputs.inventory }}
+  deployAnsible:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: ./.github/actions/ansible
+      with: 
+        playbook: playbook.yml
+        inventory: localhost
 
   ##inversed places
-  jobs:
-  build:
+  execute:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -50,4 +41,3 @@ on:
       - name: Test our functions
         run: docker exec ci_container npm test
         
-  build:
