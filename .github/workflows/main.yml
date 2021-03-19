@@ -16,7 +16,7 @@ on:
       needs: build
       runs-on: ubuntu-latest
       steps:
-        - name: 'Ansible'
+      - name: 'Ansible'
         uses: actions/checkout@v1
           description: 'Runs an Ansible playbook'
           inputs:
