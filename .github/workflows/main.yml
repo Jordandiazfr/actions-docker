@@ -11,28 +11,29 @@ on:
       uses: ansible/ansible-lint-action@master
       with:
         targets: ""
-  deployAnsible:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: 'Ansible'
+  jobs:
+    deployAnsible:
+      needs: build
+      runs-on: ubuntu-latest
+      steps:
+        - name: 'Ansible'
         uses: actions/checkout@v1
-        description: 'Runs an Ansible playbook'
-        inputs:
-          playbook:
-            description: 'Ansible playbook to run'
-            required: true
-            default: playbook.yml
-          inventory:
-            description: 'Ansible inventory to use'
-            required: true
-            default: localhost
-        runs:
-          using: 'docker'
-          image: 'Dockerfile'
-          args:
-            - ${{ inputs.playbook }}
-            - ${{ inputs.inventory }}
+          description: 'Runs an Ansible playbook'
+          inputs:
+            playbook:
+              description: 'Ansible playbook to run'
+              required: true
+              default: playbook.yml
+            inventory:
+              description: 'Ansible inventory to use'
+              required: true
+              default: localhost
+          runs:
+            using: 'docker'
+            image: 'Dockerfile'
+            args:
+              - ${{ inputs.playbook }}
+              - ${{ inputs.inventory }}
 
   ##inversed places
   jobs:
