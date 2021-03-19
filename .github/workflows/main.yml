@@ -16,10 +16,26 @@ on:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - uses: ./.github/actions/ansible
       with: 
         playbook: playbook.yml
         inventory: localhost
+      - name: 'Ansible'
+        description: 'Runs an Ansible playbook'
+        inputs:
+          playbook:
+            description: 'Ansible playbook to run'
+            required: true
+            default: playbook.yml
+          inventory:
+            description: 'Ansible inventory to use'
+            required: true
+            default: localhost
+        runs:
+          using: 'docker'
+          image: 'Dockerfile'
+          args:
+            - ${{ inputs.playbook }}
+            - ${{ inputs.inventory }}
 
   ##inversed places
   jobs:
